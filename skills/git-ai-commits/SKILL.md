@@ -85,3 +85,32 @@ Ask yourself:
 1. Who am I? (Check your model ID)
 2. Am I using human's git config? (Don't set local user.name/email)
 3. Did I add correct Co-authored-by with MY identity?
+
+## MCP Tool Usage
+
+When using MCP tools, **announce it** before executing:
+
+```
+Using MCP: github_search_repositories...
+Using MCP: github_list_issues...
+```
+
+**Note**: GitHub MCP tools are typically **read-only** (search, list, get). For write operations (commit, push, create PR), use bash/git commands directly.
+
+### MCP vs Bash
+
+| Action | Tool | Example |
+|--------|------|---------|
+| Search repos | MCP | `mcp_github_search_repositories` |
+| List issues | MCP | `mcp_github_list_issues` |
+| Get PR diff | MCP | `mcp_github_pull_request_read` |
+| Commit | Bash | `git commit -S -m "..."` |
+| Push | Bash | `git push` |
+| Create branch | Bash | `git checkout -b feature` |
+
+### Transparency
+
+Always be transparent about:
+1. **Which tools you're using** - MCP, bash, file edit
+2. **Your identity** - State your model before commits
+3. **What you're about to do** - Especially for destructive ops (force push, reset)
