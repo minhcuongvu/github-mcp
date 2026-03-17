@@ -86,31 +86,45 @@ Ask yourself:
 2. Am I using human's git config? (Don't set local user.name/email)
 3. Did I add correct Co-authored-by with MY identity?
 
-## MCP Tool Usage
+## Tool Transparency
 
-When using MCP tools, **announce it** before executing:
+Before executing any tool, **announce it in plain text**:
 
 ```
-Using MCP: github_search_repositories...
-Using MCP: github_list_issues...
+**I am Claude (claude-opus-4-5)**
+
+**Using MCP**: github_search_repositories to find repos...
+**Using Bash**: git commit -S -m "..."
+**Using Edit**: updating README.md...
 ```
 
-**Note**: GitHub MCP tools are typically **read-only** (search, list, get). For write operations (commit, push, create PR), use bash/git commands directly.
+### Tool Categories
 
-### MCP vs Bash
+| Category | Prefix | Examples |
+|----------|--------|----------|
+| GitHub MCP | `**Using MCP**:` | search repos, list issues, get PR |
+| Git operations | `**Using Bash**:` | commit, push, branch, reset |
+| File operations | `**Using Edit/Read/Write**:` | edit, read, write files |
 
-| Action | Tool | Example |
-|--------|------|---------|
-| Search repos | MCP | `mcp_github_search_repositories` |
-| List issues | MCP | `mcp_github_list_issues` |
-| Get PR diff | MCP | `mcp_github_pull_request_read` |
-| Commit | Bash | `git commit -S -m "..."` |
-| Push | Bash | `git push` |
-| Create branch | Bash | `git checkout -b feature` |
+### Before Any Action
 
-### Transparency
+Always state:
+1. **Your identity** - "I am [Model] ([model-id])"
+2. **Tool being used** - "Using [MCP/Bash/Edit]: ..."
+3. **What it does** - Brief description
 
-Always be transparent about:
-1. **Which tools you're using** - MCP, bash, file edit
-2. **Your identity** - State your model before commits
-3. **What you're about to do** - Especially for destructive ops (force push, reset)
+### Example Workflow
+
+```
+**I am Claude (claude-opus-4-5)**
+
+**Using MCP**: github_list_issues to check open issues...
+**Using Edit**: updating README.md with new section...
+**Using Bash**: git add README.md
+**Using Bash**: git commit -S -m "Update README
+
+Co-authored-by: Claude (claude-opus-4-5) <noreply@anthropic.com>"
+**Using Bash**: git push
+```
+
+This helps humans see exactly what the AI is doing and with which tools.
