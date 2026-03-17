@@ -78,8 +78,47 @@ Available toolsets:
 
 Create a Personal Access Token at https://github.com/settings/tokens with appropriate scopes for the toolsets you want to use.
 
+## Verified Commits (SSH Signing)
+
+To make your commits show as "Verified" on GitHub:
+
+### 1. Generate an SSH signing key
+
+```bash
+ssh-keygen -t ed25519 -C "your_email@example.com" -f ~/.ssh/id_ed25519_signing -N ""
+```
+
+### 2. Configure git to use SSH signing
+
+```bash
+git config --global user.name "Your Name"
+git config --global user.email "your_email@example.com"
+git config --global gpg.format ssh
+git config --global user.signingkey ~/.ssh/id_ed25519_signing
+git config --global commit.gpgsign true
+```
+
+### 3. Add the key to GitHub
+
+```bash
+# Grant the required scope
+gh auth refresh -h github.com -s admin:ssh_signing_key
+
+# Add the signing key
+gh ssh-key add ~/.ssh/id_ed25519_signing.pub --type signing --title "Signing key"
+```
+
+Or manually: Go to https://github.com/settings/keys > "New SSH Key" > Key type: "Signing Key"
+
+### 4. Verify it works
+
+```bash
+echo "test" | git commit-tree HEAD^{tree} -S
+```
+
 ## References
 
 - [GitHub MCP Server](https://github.com/github/github-mcp-server)
 - [OpenCode MCP Docs](https://opencode.ai/docs/mcp-servers/)
 - [Model Context Protocol](https://modelcontextprotocol.io/)
+- [GitHub: Signing Commits](https://docs.github.com/en/authentication/managing-commit-signature-verification/signing-commits)
