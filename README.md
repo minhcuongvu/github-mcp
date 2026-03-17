@@ -64,7 +64,10 @@ Or manually: https://github.com/settings/keys > "New SSH Key" > Key type: "Signi
 
 ## Rules for AI Assistants
 
-**CRITICAL**: Never change git identity. Use human's global config + co-author trailer.
+**CRITICAL**: 
+1. **Know your identity** - Before committing, verify which model you are
+2. **Never change git identity** - Use human's global config + co-author trailer
+3. **Take responsibility** - Use your actual model name in co-author
 
 ```bash
 # WRONG - breaks verification
@@ -72,10 +75,15 @@ git config --local user.name "Grok"
 git config --local user.email "grok@x.ai"
 git commit -m "..."  # Unverified!
 
-# CORRECT
+# WRONG - taking credit for another AI's work
+Co-authored-by: Grok <grok@x.ai>  # But you're Claude!
+
+# CORRECT - use YOUR actual model
 git commit -S -m "Message
 
-Co-authored-by: opencode (model-name) <ai@example.com>"
+Co-authored-by: Claude (claude-opus-4-5) <noreply@anthropic.com>"
+# or
+Co-authored-by: opencode (grok-4-1-fast) <grok@x.ai>
 ```
 
 **Why**: SSH key belongs to human. GitHub verifies signature matches committer email. If committer = AI, signature won't match = unverified. `Co-authored-by` gives AI credit without breaking verification.
