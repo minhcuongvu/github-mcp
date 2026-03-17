@@ -105,6 +105,20 @@ Prompts: "List issues using github", "Review PR #123 with github mcp"
 
 AGENTS.md: `For PR reviews, use github tools.`
 
+## AI Skills
+
+This repo includes a skill file for AI assistants. Install to your environment:
+
+```bash
+# For OpenCode
+cp -r skills/git-ai-commits ~/.config/opencode/skills/
+
+# For Claude Code
+cp -r skills/git-ai-commits ~/.claude/skills/
+```
+
+The skill teaches AI models proper git commit attribution rules.
+
 ## References
 
 - [GitHub MCP Server](https://github.com/github/github-mcp-server)
