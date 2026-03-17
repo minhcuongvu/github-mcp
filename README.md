@@ -116,6 +116,25 @@ Or manually: Go to https://github.com/settings/keys > "New SSH Key" > Key type: 
 echo "test" | git commit-tree HEAD^{tree} -S
 ```
 
+### Co-authoring with AI (Claude, etc.)
+
+To have verified commits while crediting an AI assistant as co-author:
+
+**Problem**: If you set the AI as committer (e.g., `Claude <noreply@anthropic.com>`), the commit will be **unverified** because the signature is from your key, not the AI's.
+
+**Solution**: Keep yourself as author/committer and add a `Co-authored-by` trailer:
+
+```bash
+git commit -S -m "Your commit message
+
+Co-authored-by: Claude <noreply@anthropic.com>"
+```
+
+This gives you:
+- **Verified** badge (signed with your key)
+- **Your name** as author/committer
+- **AI attribution** shown on GitHub with bot icon
+
 ## References
 
 - [GitHub MCP Server](https://github.com/github/github-mcp-server)
