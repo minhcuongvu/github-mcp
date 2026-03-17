@@ -135,6 +135,39 @@ This gives you:
 - **Your name** as author/committer
 - **AI attribution** shown on GitHub with bot icon
 
+### Rules for AI Assistants
+
+**DO NOT** change git user identity when making commits:
+
+```bash
+# WRONG - breaks verification
+git config --local user.name "Grok"
+git config --local user.email "grok@x.ai"
+git commit -m "..."  # Unverified! Signed with human's key but AI identity
+
+# CORRECT - use global config (human) + co-author trailer
+git commit -S -m "Message
+
+Co-authored-by: Grok <grok@x.ai>"
+```
+
+**Why this matters**:
+1. SSH signing key belongs to the human, not the AI
+2. GitHub verifies signature matches committer email
+3. If committer = AI email, signature won't match = unverified
+4. `Co-authored-by` gives AI credit without breaking verification
+
+**For AI agents**: Never run `git config user.name/email` with AI identity. Always use the human's global git config and add yourself as co-author in the commit message.
+
+## xAI/Grok Research (2026-03-18)
+
+xAI repos:
+- grok-1: 51k stars, last commit 2024-03-19 (cuda fix)
+- grok-prompts: CI agent updates prompts (2025-11-17)
+- xai-cookbook: API examples (2026-03-15)
+
+No AI co-authors in recent commits.
+
 ## References
 
 - [GitHub MCP Server](https://github.com/github/github-mcp-server)
