@@ -2,39 +2,44 @@
 
 GitHub MCP server setup for AI coding assistants (OpenCode, Claude Code, etc).
 
+## Prerequisites
+
+- [Docker](https://docs.docker.com/get-docker/) installed and running
+- [GitHub Personal Access Token](https://github.com/settings/tokens) with appropriate scopes
+- [OpenCode](https://opencode.ai) installed (for Option 1)
+
 ## Setup
 
-### Option 1: Local MCP (Recommended)
+### Option 1: Local MCP via OpenCode (Recommended)
 
-Add to `~/.config/opencode/opencode.json`:
+Spawns Docker container per-request via stdio. No persistent server needed.
 
-```json
-{
-  "$schema": "https://opencode.ai/config.json",
-  "mcp": {
-    "github": {
-      "type": "local",
-      "command": [
-        "docker", "run", "-i", "--rm",
-        "-e", "GITHUB_PERSONAL_ACCESS_TOKEN=your_token_here",
-        "ghcr.io/github/github-mcp-server",
-        "stdio",
-        "--toolsets", "repos,issues,pull_requests",
-        "--read-only"
-      ]
-    }
-  }
-}
-```
+1. Copy the example config:
+   ```bash
+   # Create config directory if needed
+   mkdir -p ~/.config/opencode
+   
+   # Copy and edit the example
+   cp opencode.json.example ~/.config/opencode/opencode.json
+   ```
 
-Verify: `opencode mcp list`
+2. Edit `~/.config/opencode/opencode.json` and replace `your_token_here` with your GitHub token
+
+3. Verify:
+   ```bash
+   opencode mcp list
+   ```
 
 ### Option 2: HTTP Server (Docker Compose)
+
+Runs persistent HTTP server. Useful for sharing across multiple clients or web apps.
 
 ```bash
 cp .env.example .env  # Add your GitHub token
 docker-compose up -d  # Server at http://localhost:8766/mcp
 ```
+
+Requires Bearer token header on each request.
 
 ## Toolsets
 
