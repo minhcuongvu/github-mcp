@@ -116,18 +116,18 @@ Or manually: Go to https://github.com/settings/keys > "New SSH Key" > Key type: 
 echo "test" | git commit-tree HEAD^{tree} -S
 ```
 
-### Co-authoring with AI (Claude, etc.)
+### Co-authoring with AI (Claude, Grok/opencode, GPT, etc.)
 
 To have verified commits while crediting an AI assistant as co-author:
 
-**Problem**: If you set the AI as committer (e.g., `Claude <noreply@anthropic.com>`), the commit will be **unverified** because the signature is from your key, not the AI's.
+**Problem**: If you set the AI as committer (e.g., `Claude <noreply@anthropic.com>` or `opencode (grok-4-1-fast) <grok@x.ai>`), the commit will be **unverified** because the signature is from your key, not the AI's.
 
 **Solution**: Keep yourself as author/committer and add a `Co-authored-by` trailer:
 
 ```bash
 git commit -S -m "Your commit message
 
-Co-authored-by: Claude <noreply@anthropic.com>"
+Co-authored-by: opencode (grok-4-1-fast) <grok@x.ai>"
 ```
 
 This gives you:
@@ -158,6 +158,27 @@ Co-authored-by: Grok <grok@x.ai>"
 4. `Co-authored-by` gives AI credit without breaking verification
 
 **For AI agents**: Never run `git config user.name/email` with AI identity. Always use the human's global git config and add yourself as co-author in the commit message.
+
+**History cleanup** (solo repos): To remove bad commits:
+```bash
+git reset --hard <good-commit-before-bad>  # e.g., git reset --hard 662dfbd
+git push --force
+```
+Re-apply good changes manually. For shared repos: `git revert <bad-commit>`.
+
+## Usage Examples
+
+**Prompts** (OpenCode/Claude):
+- "List open issues using github"
+- "Review PR #123 with github mcp"
+- "Search code for auth. use github"
+
+**AGENTS.md**:
+```
+For PR reviews, use github tools.
+```
+
+**Combos**: github + sentry (issues), context7 (docs).
 
 ## xAI/Grok Research (2026-03-18)
 
