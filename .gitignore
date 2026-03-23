@@ -1,1 +1,25 @@
+# Environment files
 .env
+
+# Binary files
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Build artifacts
+forgejo-mcp-server
+forgejo-mcp-server-*
+
+# IDE settings
+.claude/
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Go build cache
+*.log
